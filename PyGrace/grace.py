@@ -11,27 +11,26 @@ HEADER_COMMENT = '# Amaral Group python interface for xmgrace. OH YEAH!'
 INDEX_ORIGIN = 0  # zero or one (one is for losers)
 
 class Grace(GraceObject):
-    def __init__(self,
-                 width=792,
-                 height=612,
-		 background_color=0,
-                 background_fill='off',
-                 version='50114',
-                 verbose=False,
-                 colors=None,
-                 **kwargs
-		 ): 
+    def __init__( self,
+                  width=792,
+                  height=612,
+                  background_color=0,
+                  background_fill='off',
+                  version='50114',
+                  verbose=False,
+                  colors=None,
+                  **kwargs ): 
         GraceObject.__init__(self, None, locals())
 
-	self.timestamp = Timestamp(self)
-
-        # set these first, so that children inherit this color scheme
+        self.timestamp = Timestamp(self)
+    
+            # set these first, so that children inherit this color scheme
         self.colors = colors or DefaultColorScheme()
         self.fonts = default_fonts
-
+    
         self._graphIndex = INDEX_ORIGIN
-	self.graphs = []
-
+        self.graphs = []
+    
         self.drawing_objects = []
         
         # maximum frame ratios in viewport units
@@ -87,16 +86,16 @@ class Grace(GraceObject):
         lines.append(str(self.fonts))
         lines.append(str(self.colors))
         lines.append('@background color %s' % self.background_color)
-	lines.append(str(self.timestamp))
+        lines.append(str(self.timestamp))
         return '\n'.join(lines)
     
     def __str__(self):
         lines = []
         lines.append('# Grace project file')
         lines.append(HEADER_COMMENT)
-	lines.append(self._header_string())
+        lines.append(self._header_string())
         lines.extend(map(str, self.drawing_objects))
-	lines.extend(map(str, self.graphs))
+        lines.extend(map(str, self.graphs))
         for graph in self.graphs:
             for dataset in graph.datasets:
                 lines.append('@target G%i.S%i' % (graph.index, dataset.index))
@@ -114,9 +113,9 @@ class Grace(GraceObject):
             filename = filename + '.agr'
         
         # write file
-	outfile = open(filename,'w')
-	outfile.write(str(self))
-	outfile.close()
+        outfile = open(filename,'w')
+        outfile.write(str(self))
+        outfile.close()
 
     def write_file(self, filename='temp.eps', filetype=None):
         """write_file(filename='temp.eps', filetype=None) -> none.
@@ -160,7 +159,7 @@ file name.  In this case, Grace.write_file does not recognize the file
 type of file '%s'.  Please specify the gracebat file type manually
 using the 'filetype' keyword argument.
 """%(filename)
-            raise TypeError, message
+            raise TypeError( message )
 
         # make command that will be piped to
         command = 'gracebat -hardcopy -hdevice %s -printfile "%s" -pipe' % \
@@ -261,7 +260,7 @@ using the 'filetype' keyword argument.
             message = """keyword arguments 'graphs' and 'exclude_graphs' 
 can not be used simultaneously.
 """
-            raise TypeError,message
+            raise TypeError( message )
         
         # only autoscale these graphs
         if graphs:
@@ -302,7 +301,7 @@ can not be used simultaneously.
             message = """keyword arguments 'graphs' and 'exclude_graphs' 
 can not be used simultaneously.
 """
-            raise TypeError,message
+            raise TypeError( message )
         
         # only autoscale these graphs
         if graphs:

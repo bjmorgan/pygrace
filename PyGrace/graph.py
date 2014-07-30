@@ -419,7 +419,7 @@ In Graph.smallest_positive()...
 There are no datasets or drawing_objects on which to determine the
 smallest positive number.
 """
-            raise TypeError, message
+            raise TypeError( message )
         
     def data_limits(self,only_visible=True):
         all = []
@@ -460,7 +460,7 @@ smallest positive number.
 In Graph.limits()...
 There are no datasets or drawing_objects on which to determine the limits.
 """
-            raise TypeError, message
+            raise TypeError( message )
 
     def set_world_to_limits(self, epsilon=1e-12):
         xmin, ymin, xmax, ymax = self.limits()

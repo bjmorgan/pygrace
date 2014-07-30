@@ -15,7 +15,7 @@ class SolidRectangle(DataSet):
     def __init__(self, color, *args, **kwargs):
         DataSet.__init__(self, *args, **kwargs)
         if len(self.data) != 2:
-            raise TypeError, 'Data for SolidRectangle MUST contain 2 points'
+            raise TypeError( 'Data for SolidRectangle MUST contain 2 points' )
         x0 = self.data[0][0]
         x1 = self.data[1][0]
         y0 = min(self.data[0][1], self.data[1][1])
@@ -35,7 +35,7 @@ class SolidOutlinedRectangle(DataSet):
     def __init__(self, color, outline_color=1, *args, **kwargs):
         DataSet.__init__(self, *args, **kwargs)
         if len(self.data) != 2:
-            raise TypeError, 'Data for SolidOutlinedRectangle MUST contain 2 points'
+            raise TypeError( 'Data for SolidOutlinedRectangle MUST contain 2 points' )
         x0 = self.data[0][0]
         x1 = self.data[1][0]
         y0 = min(self.data[0][1], self.data[1][1])
@@ -73,8 +73,9 @@ class SolidPixelatedShape(DataSet):
         DataSet.__init__(self, *args, **kwargs)
 
         # Sort
-        print >> sys.stderr, "Sorting data."
-        pixeldata = sorted(self.data, key=lambda (x,y): (y,x))
+        print( "Sorting data.", file = sys.stderr )
+        # pixeldata = sorted(self.data, key=lambda (x,y): (y,x))
+        pixeldata = self.data.sort( key = lambda x, y: ( y, x ) )
         
         # Determine pixel size
         if pixelsize is not None:
@@ -339,7 +340,7 @@ class ColorBar(Graph):
                 y1 = ymin * math.pow(ymax/ymin,float(i+1)/float(len(self.color_range)))
             else:
                 message = "'%s' is an unknown axis type"%self.xaxis.scale
-                raise TypeError,message
+                raise TypeError( message )
             # add a three-point dataset to show-up as a solid rectangle
             the_dataset = self.add_dataset([(0, y0), (1, y1)],
                                            SolidRectangle,

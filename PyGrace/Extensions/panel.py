@@ -36,7 +36,7 @@ PanelLabel always lives in 'view' coordinates to prevent it from being
 marked as out of bounds in the event that
 Graph.remove_extraworld_drawing_objects is called.
 """
-            raise TypeError, message
+            raise TypeError( message)
 
         # specify formats for panel labels
         self.set_text()
@@ -63,13 +63,13 @@ Graph.remove_extraworld_drawing_objects is called.
         # make sure label_scheme is legal
         if label_scheme is None:
             label_scheme = self.label_scheme
-        elif not self.root.label_schemes.has_key(label_scheme):
+        elif not label_scheme in self.root.label_schemes:
             message = """
 Label scheme '%s' is not allowed.  Try one of these instead:
 %s
 """%(str(label_scheme),
      '\n'.join(self.root.label_schemes.keys()))
-            raise TypeError,message
+            raise TypeError(message)
         self.label_scheme = label_scheme
 
         # make sure index is legal
@@ -83,7 +83,7 @@ For label scheme '%s', label index must be between 0 and %d.
      label_scheme,
      label_scheme,
      len(self.root.label_schemes[label_scheme]))
-            raise TypeError,message
+            raise TypeError(message)
         self.index = index
 
         # set the text of the label
@@ -228,11 +228,11 @@ class MultiPanelGrace(MultiGrace):
         """Add a label scheme to this Grace.
         """
 
-        if (self.label_schemes.has_key(label_scheme) and 
+        if (label_scheme in self.label_schemes and 
             self.label_schemes[label_scheme]!=tuple(labels)):
             message = """Label scheme '%s' already exists.
 """%(label_scheme)
-            raise KeyError,message
+            raise KeyError(message)
 
         self.label_schemes[label_scheme] = tuple(labels)
 
@@ -241,7 +241,7 @@ class MultiPanelGrace(MultiGrace):
         in the grace.
         """
 
-        if not self.label_schemes.has_key(label_scheme):
+        if not label_scheme in self.label_schemes:
             l = self.label_schemes.keys()
             l.sort()
             possible_label_schemes = ''
@@ -251,7 +251,7 @@ class MultiPanelGrace(MultiGrace):
             message = """Label scheme '%s' does not exist.  
 Only labels schemes %s are possible.
 """%(label_scheme,possible_label_schemes)
-            raise KeyError,message
+            raise KeyError(message)
 
         self.label_scheme = label_scheme
         for graph in self.graphs:
